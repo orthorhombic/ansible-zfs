@@ -7,7 +7,7 @@
   when: zfs_pools is defined
 
 - name: manage_zfs | Gather ZPool Status
-  shell: zpool status
+  command: zpool status
   changed_when: false
   register: zpool_devices
   check_mode: no
@@ -76,9 +76,12 @@
       quota: "{{ item.quota|default(omit) }}"
       recordsize: "{{ item.recordsize|default(omit) }}"
       sharenfs: "{{ item.sharenfs|default(omit) }}"
+      aclinherit: "{{ item.aclinherit|default(omit) }}"
+      acltype: "{{ item.acltype|default(omit) }}"
+      xattr: "{{ item.xattr|default(omit) }}"
       sync: "{{ item.sync|default(omit) }}"
-      snapdev: "{{ item.snapdev|default('hidden')}}"
-      snapdir: "{{ item.snapdir|default('hidden')}}"
+      snapdev: "{{ item.snapdev|default('hidden') }}"
+      snapdir: "{{ item.snapdir|default('hidden') }}"
     state: "{{ item.state }}"
   with_items: "{{ zfs_pools }}"
   when: zfs_create_pools
@@ -96,9 +99,12 @@
       quota: "{{ item.quota|default(omit) }}"
       recordsize: "{{ item.recordsize|default(omit) }}"
       sharenfs: "{{ item.sharenfs|default(omit) }}"
+      aclinherit: "{{ item.aclinherit|default(omit) }}"
+      acltype: "{{ item.acltype|default(omit) }}"
+      xattr: "{{ item.xattr|default(omit) }}"
       sync: "{{ item.sync|default(omit) }}"
-      snapdev: "{{ item.snapdev|default('hidden')}}"
-      snapdir: "{{ item.snapdir|default('hidden')}}"
+      snapdev: "{{ item.snapdev|default('hidden') }}"
+      snapdir: "{{ item.snapdir|default('hidden') }}"
     state: "{{ item.state }}"
   with_items: "{{ zfs_filesystems }}"
   when: zfs_create_filesystems
